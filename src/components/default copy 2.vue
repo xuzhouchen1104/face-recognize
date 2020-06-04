@@ -1,8 +1,15 @@
 <template>
-  <div class="see">
-    <img id="myImg" src="images/z.jpg" />
-    <canvas id="myCanvas" />
+  <div>
+     <div>
+       <label>更换图片</label>
+       <input type="file" accept="image/png, image/jpeg" @change="fnChange($event)" />
+      </div>
+      <div class="see">
+        <img id="myImg" src="images/xxm/xxm03.jpg" />
+        <canvas id="myCanvas" />
+     </div>
   </div>
+
 </template>
 
 <script>
@@ -31,14 +38,14 @@ export default {
     });
   },
   methods: {
-    // ageGenderNet 识别性别和年龄
-    // faceExpressionNet 识别表情,开心，沮丧，普通
-    // faceLandmark68Net 识别脸部特征用于mobilenet算法
-    // faceLandmark68TinyNet 识别脸部特征用于tiny算法
-    // faceRecognitionNet 识别人脸
-    // ssdMobilenetv1 google开源AI算法除库包含分类和线性回归
-    // tinyFaceDetector 比Google的mobilenet更轻量级，速度更快一点
-    // mtcnn  多任务CNN算法，一开浏览器就卡死
+    // ageGenderNet 识别性别和年龄 1
+    // faceExpressionNet 识别表情,开心，沮丧，普通 1
+    // faceLandmark68Net 识别脸部特征用于mobilenet算法 1
+    // faceLandmark68TinyNet 识别脸部特征用于tiny算法 1
+    // faceRecognitionNet 识别人脸 1
+    // ssdMobilenetv1 google开源AI算法除库包含分类和线性回归 1
+    // tinyFaceDetector 比Google的mobilenet更轻量级，速度更快一点 1
+    // mtcnn  多任务CNN算法，一开浏览器就卡死 1
     // tinyYolov2 识别身体轮廓的算法，不知道怎么用
     async init() {
       await faceapi.nets.ssdMobilenetv1.loadFromUri('/models');
@@ -78,8 +85,8 @@ export default {
 
       const resizeDetections = faceapi.resizeResults(results, displaySize);
   
-      // faceapi.draw.drawDetections(this.canvasEl, resizeDetections);
-      // faceapi.draw.drawFaceLandmarks(this.canvasEl, resizeDetections);
+      faceapi.draw.drawDetections(this.canvasEl, resizeDetections);
+      faceapi.draw.drawFaceLandmarks(this.canvasEl, resizeDetections);
       
      
       const landmarks = resizeDetections[0].landmarks
@@ -149,6 +156,15 @@ export default {
         y: mouth_mid_point.y
       }
     },
+     fnChange(e) {
+      if (!e.target.files.length) return;
+      // 将文件显示为图像并识别
+      faceapi.bufferToImage(e.target.files[0]).then((img) => {
+        this.imgEl.src = img.src;
+        this.canvasEl.getContext('2d').clearRect(0, 0, this.canvasEl.width, this.canvasEl.height);
+        this.runWithLandmarks();
+      });
+    }
 
     // drawFacemask(ctx , img, info) {
      
@@ -159,6 +175,7 @@ export default {
 
 <style lang="scss">
 .see {
+  height: 1000px;
   position: relative;
   #myImg,
   #myCanvas {

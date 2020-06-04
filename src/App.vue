@@ -1,20 +1,32 @@
 <template>
-  <div id="app">
-    <HelloWorld />
-    <!-- <canvas1 /> -->
-  </div>
+    <el-tabs v-model="activeName" @tab-click="handleClick">
+    <el-tab-pane label="用户管理" name="first">
+      <DefaultModel />
+      </el-tab-pane>
+    <el-tab-pane label="配置管理" name="second">配置管理</el-tab-pane>
+    <el-tab-pane label="角色管理" name="third">角色管理</el-tab-pane>
+    <el-tab-pane label="定时任务补偿" name="fourth">定时任务补偿</el-tab-pane>
+  </el-tabs>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue';
-// import canvas1 from './components/canvasExample/canvas1';
+import DefaultModel from './components/defaultModel';
 
 export default {
   name: 'App',
   components: {
-    HelloWorld,
-    // canvas1,
+    DefaultModel,
   },
+   data() {
+      return {
+        activeName: 'first'
+      };
+    },
+    methods: {
+      handleClick(tab, event) {
+        console.log(tab, event);
+      }
+    }
 };
 </script>
 
