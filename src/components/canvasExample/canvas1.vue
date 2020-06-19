@@ -11,9 +11,9 @@ export default {
     // this.drawLine();
     // this.drawArc();
     // this.drawBezier();
-    // this.drawImg();
+    this.drawImg();
     // this.saveAndStore();
-    this.translate();
+    // this.translate();
     // this.drawAnimation();
   },
   methods: {
@@ -84,7 +84,8 @@ export default {
       let img = new Image();
       img.src = 'images/xxm/xxm03.jpg';
       img.onload = function() {
-        ctx.drawImage(img, 0, 0, 600, 600);
+        ctx.drawImage(img, 0, 0, 200, 200);
+        ctx.drawImage(img, 300, 0, 200, 200);
       };
       //前 4 个是定义图像源的切片位置和大小，后 4 个则是定义切片的目标显示位置和大小。
       // drawImage(image, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight)
