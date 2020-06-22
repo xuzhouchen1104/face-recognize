@@ -82,10 +82,11 @@ export default {
       const canvas = document.getElementById('canvas');
       let ctx = canvas.getContext('2d');
       let img = new Image();
-      img.src = 'images/xxm/xxm03.jpg';
+      img.src = 'images/1.png';
       img.onload = function() {
-        ctx.drawImage(img, 0, 0, 200, 200);
-        ctx.drawImage(img, 300, 0, 200, 200);
+        ctx.translate(200, 200);
+        ctx.rotate(45);
+        ctx.drawImage(img, -100, -50, 200, 100);
       };
       //前 4 个是定义图像源的切片位置和大小，后 4 个则是定义切片的目标显示位置和大小。
       // drawImage(image, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight)

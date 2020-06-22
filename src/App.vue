@@ -1,13 +1,14 @@
 <template>
-    <el-tabs v-model="activeName" @tab-click="handleClick">
+  <el-tabs v-model="activeName">
     <el-tab-pane label="基本框" name="first">
       <DefaultModel />
-      </el-tab-pane>
-    <el-tab-pane label="68点" name="second"><lanmark68/></el-tab-pane>
+    </el-tab-pane>
+    <el-tab-pane label="68点" name="second"><lanmark68 /></el-tab-pane>
     <el-tab-pane label="人脸识别" name="third"><recognation /></el-tab-pane>
     <el-tab-pane label="表情" name="fourth"><expression /></el-tab-pane>
     <el-tab-pane label="年龄" name="five"><Age /></el-tab-pane>
     <el-tab-pane label="口罩" name="six"><FaceMask /></el-tab-pane>
+    <el-tab-pane label="口罩22" name="six1"><Canvas1 /></el-tab-pane>
   </el-tabs>
 </template>
 
@@ -18,6 +19,7 @@ import recognation from './components/recognation';
 import expression from './components/expression';
 import Age from './components/age';
 import FaceMask from './components/mask';
+import Canvas1 from './components/canvasExample/canvas1';
 
 export default {
   name: 'App',
@@ -28,17 +30,18 @@ export default {
     expression,
     Age,
     FaceMask,
+    Canvas1,
   },
-   data() {
-      return {
-        activeName: 'first'
-      };
-    },
-    methods: {
-      handleClick(tab, event) {
-        console.log(tab, event);
-      }
-    }
+  data() {
+    return {
+      activeName: 'first',
+    };
+  },
+  methods: {
+    // handleClick(tab, event) {
+    //   // console.log(tab, event);
+    // },
+  },
 };
 </script>
 

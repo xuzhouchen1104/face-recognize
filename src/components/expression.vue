@@ -1,15 +1,14 @@
 <template>
   <div>
-     <div>
-       <label>更换图片</label>
-       <input type="file" accept="image/png, image/jpeg" @change="fnChange($event)" />
-      </div>
-      <div class="see">
-        <img id="myImgExp" src="images/xxm/xxm03.jpg" />
-        <canvas id="myCanvasExp" />
-     </div>
+    <div>
+      <label>更换图片</label>
+      <input type="file" accept="image/png, image/jpeg" @change="fnChange($event)" />
+    </div>
+    <div class="see">
+      <img id="myImgExp" src="images/xxm/xxm03.jpg" />
+      <canvas id="myCanvasExp" />
+    </div>
   </div>
-
 </template>
 
 <script>
@@ -20,18 +19,16 @@ export default {
       options: null, // 模型参数
       imgEl: null,
       canvasEl: null,
-
     };
   },
   mounted() {
     this.init().then(() => {
       // this.runWithDefault();
       // this.runWithLandmarks();
-      this.runWithexpression()
+      this.runWithexpression();
     });
   },
   methods: {
-
     async init() {
       await faceapi.nets.ssdMobilenetv1.loadFromUri('/models');
       await faceapi.nets.faceLandmark68Net.loadFromUri('/models');
@@ -46,9 +43,11 @@ export default {
       this.canvasEl = document.getElementById('myCanvasExp');
     },
 
-    async runWithexpression () {
-      const results = await faceapi.detectAllFaces(this.imgEl, this.options)
-      .withFaceLandmarks().withFaceExpressions()
+    async runWithexpression() {
+      const results = await faceapi
+        .detectAllFaces(this.imgEl, this.options)
+        .withFaceLandmarks()
+        .withFaceExpressions();
 
       const displaySize = { width: this.imgEl.width, height: this.imgEl.height };
       faceapi.matchDimensions(this.canvasEl, displaySize);
@@ -56,13 +55,12 @@ export default {
       const resizeDetections = faceapi.resizeResults(results, displaySize);
       faceapi.draw.drawDetections(this.canvasEl, resizeDetections);
       // draw a textbox displaying the face expressions with minimum probability into the canvas
-      const minProbability = 0.3
-       faceapi.draw.drawFaceExpressions(this.canvasEl, resizeDetections, minProbability)
+      const minProbability = 0.3;
+      faceapi.draw.drawFaceExpressions(this.canvasEl, resizeDetections, minProbability);
       console.log(resizeDetections);
-  
     },
 
-     fnChange(e) {
+    fnChange(e) {
       if (!e.target.files.length) return;
       // 将文件显示为图像并识别
       faceapi.bufferToImage(e.target.files[0]).then((img) => {
@@ -70,15 +68,14 @@ export default {
         this.canvasEl.getContext('2d').clearRect(0, 0, this.canvasEl.width, this.canvasEl.height);
         this.runWithexpression();
       });
-    }
-
+    },
   },
 };
 </script>
 
 <style lang="scss">
 .see {
-  height: 1000px;
+  height: 800px;
   position: relative;
   #myImgExp,
   #myCanvasExp {
